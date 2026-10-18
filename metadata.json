@@ -1,0 +1,5 @@
+{
+  "name": "Blockbench",
+  "description": "Blockbench is a free, modern low-poly 3D modeling and animation software web app.",
+  "capabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

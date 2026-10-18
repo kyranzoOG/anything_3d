@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+:root {
+  --bg-primary: #181a1f;
+  --bg-secondary: #21252b;
+  --bg-tertiary: #282c34;
+  --bg-hover: #333842;
+  --bg-active: #3e4451;
+  --border-color: #121417;
+  --accent-color: #3b82f6;
+  --accent-hover: #60a5fa;
+  --text-main: #abb2bf;
+  --text-bright: #ffffff;
+  --text-dim: #5c6370;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Custom workstation scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #181a1f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2c313a;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3e4451;
+}
+
+/* Number input without spinners */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+/* Pixel art rendering for textures and canvases */
+.pixelated {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}

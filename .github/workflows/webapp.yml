@@ -1,0 +1,62 @@
+name: Deploy Blockbench to GitHub Pages
+
+on:
+  push:
+    branches: [ "master", "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout User Repository
+        uses: actions/checkout@v4
+        with:
+          path: user-repo
+
+      - name: Clone Blockbench Core
+        uses: actions/checkout@v4
+        with:
+          repository: 'JannisX11/blockbench'
+          ref: 'master'
+          path: blockbench-app
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Overlay Offline Configuration & Build
+        run: |
+          # Copy our static offline modifications on top of the Blockbench core
+          cp -rf user-repo/* blockbench-app/
+          cd blockbench-app
+          # Clean desktop artifacts
+          rm -rf electron icon.icns icon.ico .travis.yml scripts/notarize.js scripts/rename_portable.js CNAME
+          touch .nojekyll
+          npm install
+          node ./build.js --target=web
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'blockbench-app'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
