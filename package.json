@@ -22,7 +22,7 @@
 	},
 	"scripts": {
 		"dev": "node ./build.js --target=web --serve --host=0.0.0.0 --port=3000",
-		"build": "node ./build.js --target=web",
+		"build": "node ./build.js --target=web && node ./scripts/prepare_deploy.js",
 		"serve": "node ./build.js --target=web --serve --host=0.0.0.0 --port=3000",
 		"pwa": "node ./scripts/generate_pwa.js"
 	},
