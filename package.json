@@ -26,9 +26,6 @@
 		"serve": "node ./build.js --target=web --serve --host=0.0.0.0 --port=3000",
 		"pwa": "node ./scripts/generate_pwa.js"
 	},
-	"overrides": {
-		"three": "$three"
-	},
 	"devDependencies": {
 		"@electron/notarize": "^2.5.0",
 		"@lunapaint/tga-codec": "^0.2.0",
