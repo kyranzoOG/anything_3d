@@ -631,7 +631,7 @@ if (isApp && location.href.endsWith('/blockbench/index.html')) {
 
 var news_call = $.ajax({
 	cache: false,
-	url: './content/news.json',
+	url: 'https://web.blockbench.net/content/news.json',
 	dataType: 'json'
 });
 documentReady.then(() => {
@@ -782,6 +782,13 @@ Promise.all([news_call, documentReady]).then((results) => {
 	if (Blockbench.hasFlag('after_update') && data.new_version) {
 		data.new_version.insert_after = 'splash_screen'
 		addStartScreenSection('new_version', data.new_version);
+		jQuery.ajax({
+			url: 'https://blckbn.ch/api/event/successful_update',
+			type: 'POST',
+			data: {
+				version: Blockbench.version
+			}
+		})
 	}
 	if (data.psa) {
 		(function() {

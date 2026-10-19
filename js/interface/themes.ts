@@ -216,7 +216,25 @@ export class CustomTheme {
 			},
 			onOpen() {
 				this.content_vue.data = CustomTheme.data;
-				remote_themes_loaded = true;
+				if (!remote_themes_loaded) {
+					remote_themes_loaded = true;
+					$.getJSON('https://api.github.com/repos/JannisX11/blockbench-themes/contents/themes').then(files => {
+						files.forEach(async (file) => {
+							try {
+								let {content} = await $.getJSON(file.git_url);
+								let theme = new CustomTheme().parseBBTheme(patchedAtob(content));
+								if (theme.desktop_only && Blockbench.isMobile) return false;
+								theme.id = file.name.replace(/\.\w+/, '');
+								theme.source = 'repository';
+								if (!CustomTheme.themes.find(t2 => t2.id == theme.id)) {
+									CustomTheme.themes.push(theme);
+								}
+							} catch (err) {
+								console.error(err);
+							}
+						})
+					}).catch(console.error)
+				}
 			},
 			component: {
 				data: {
@@ -842,8 +860,22 @@ export function loadThemes() {
 	if (stored_theme_data) {
 		let stored_theme = new CustomTheme(stored_theme_data);
 
+		// Check for updates
 		if (stored_theme.source == 'repository' && stored_theme.id) {
 			CustomTheme.loadTheme(stored_theme);
+			fetch(`https://cdn.jsdelivr.net/gh/JannisX11/blockbench-themes/themes/${stored_theme.id}.bbtheme`).then(async (result) => {
+				let text_content = await result.text();
+				if (!text_content) return;
+				let theme = new CustomTheme().parseBBTheme(text_content);
+
+				if ((theme.version && !stored_theme.version) || (theme.version && stored_theme.version && VersionUtil.compare(theme.version, '>', stored_theme.version))) {
+					// Update theme
+					stored_theme.extend(theme);
+					stored_theme.source = 'repository';
+					stored_theme.load();
+					console.log(`Updated Theme "${stored_theme.id}" to v${theme.version}`);
+				}
+			});
 		} else if ((stored_theme.source == 'built_in' || stored_theme.source == 'file') && stored_theme.id) {
 			let match = CustomTheme.themes.find(t => t.id == stored_theme.id);
 			if (match) {

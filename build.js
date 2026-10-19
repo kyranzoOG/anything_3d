@@ -96,7 +96,7 @@ const minify = !dev_mode;
  * @type {esbuild.BuildOptions} BuildOptions
  */
 const config = {
-    entryPoints: ['./js/main.js'],
+    entryPoints: ['./js/main.ts'],
     define: {
         isApp: isApp.toString(),
         appVersion: `"${pkg.version}"`,

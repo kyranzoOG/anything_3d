@@ -5,7 +5,7 @@
 		"layout": "vertical",
 		"insert_after": "splash_screen",
 		"text": [
-			{"text": "Welcome to Blockbench 5.2", "type": "h1"},
+			{"text": "Welcome to Workbench 5.2", "type": "h1"},
 			{"text": "Check out the [full changelog](https://github.com/JannisX11/blockbench/releases/tag/v5.2.0) - or watch the [update video](https://youtu.be/9MET5-wH5uw)!"}
 		],
 		"features": [

@@ -185,6 +185,7 @@ export const MenuBar = {
 				}
 			},
 			'open_model',
+			'open_from_link',
 			'new_window',
 			new MenuSeparator('project'),
 			'save_project',
@@ -243,7 +244,9 @@ export const MenuBar = {
 				'export_stl',
 				'export_collada',
 				'export_legacy_project',
-				'export_modded_animations'
+				'export_modded_animations',
+				'upload_sketchfab',
+				'share_model',
 			]},
 			'export_over',
 			'export_asset_archive',
@@ -251,6 +254,7 @@ export const MenuBar = {
 			{name: 'menu.file.preferences', id: 'preferences', icon: 'tune', children: [
 				'settings_window',
 				'keybindings_window',
+				'theme_window',
 				{
 					id: 'profiles',
 					name: 'data.settings_profile',
@@ -281,7 +285,9 @@ export const MenuBar = {
 						return list;
 					}
 				}
-			]}
+			]},
+			'plugins_window',
+			'edit_session'
 		], {icon: 'draft'})
 		new BarMenu('edit', [
 			new MenuSeparator('undo'),
@@ -610,6 +616,10 @@ export const MenuBar = {
 			'view_backups',
 			new MenuSeparator('about'),
 			{name: 'menu.help.developer', id: 'developer', icon: 'fas.fa-wrench', children: [
+				'reload_plugins',
+				{name: 'menu.help.plugin_documentation', id: 'plugin_documentation', icon: 'fa-book', click: () => {
+					Blockbench.openLink('https://www.blockbench.net/wiki/docs/plugin');
+				}},
 				'experimental_settings',
 				'open_dev_tools',
 				{

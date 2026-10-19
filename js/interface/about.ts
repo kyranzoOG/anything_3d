@@ -3,14 +3,35 @@ import VersionUtil from '../util/version_util'
 BARS.defineActions(() => {
 	new Action('about_window', {
 		name: tl('dialog.settings.about') + '...',
-		description: `Blockbench ${Blockbench.version}`,
+		description: `Workbench ${Blockbench.version}`,
 		icon: 'info',
 		category: 'blockbench',
 		click: function () {
 			const data = {
 				isApp,
-				version_label: VersionUtil.format(Blockbench.version)
+				version_label: Blockbench.version
 			};
+			jQuery.ajax({
+				url: 'https://api.github.com/repos/JannisX11/blockbench/releases/latest',
+				cache: false,
+				type: 'GET',
+				success(release) {
+					let releaseVersion = release.tag_name.replace(/^v/, '');
+					let display_version = VersionUtil.format(Blockbench.version);
+					switch (VersionUtil.compare(Blockbench.version, releaseVersion)) {
+						case 1:
+							data.version_label = `${display_version} (Pre-release)`;
+							break;
+						case 0:
+							data.version_label = `${display_version} (${tl('about.version.up_to_date')}😄)`;
+							break;
+						case -1:
+							data.version_label = `${display_version} (${tl('about.version.update_available', [releaseVersion])})`;
+							break;
+					}
+				},
+				error(err) {}
+			})
 
 			new Dialog({
 				id: 'about',
@@ -28,7 +49,7 @@ BARS.defineActions(() => {
 					template: `
 						<div>
 							<div class="blockbench_logo" id="about_page_title">
-								<img src="assets/logo_text_white.svg" alt="Blockbench" width="340px">
+								<img src="assets/logo_text_white.svg" alt="Workbench" width="340px">
 							</div>
 							<p>Version <span>{{ version_label }}</span></p>
 

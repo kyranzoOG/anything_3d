@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Blockbench</title>
+	<title>Workbench</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="theme-color" content="#121418">
 	<meta name="color-scheme" content="dark">
 	<meta name="robots" content="noindex">
-	<meta name="description" content="Blockbench is a free, modern low-poly 3D modeling and animation software web app." />
-	<meta property="og:title" content="Blockbench" />
-	<meta property="og:description" content="Blockbench is a free, modern low-poly 3D modeling and animation software web app." />
+	<meta name="description" content="Workbench is a free, modern low-poly 3D modeling and animation software web app." />
+	<meta property="og:title" content="Workbench" />
+	<meta property="og:description" content="Workbench is a free, modern low-poly 3D modeling and animation software web app." />
 	<link rel="manifest" href="manifest.webmanifest">
 	<link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
 	<link rel="apple-touch-icon" href="icon_full.png">
@@ -30,6 +30,8 @@
 <body spellcheck="false" class="maximized">
 	<script>
 		if (typeof module === 'object') {window.module = module; module = undefined;}//jQuery Fix
+		window.Blockbench = window.Blockbench || {};
+		window.Workbench = window.Blockbench;
 		
 		if (localStorage.getItem('theme')) {
 			try {
@@ -57,7 +59,7 @@
 		}
 		window.factoryResetAndReload = function() {
 			let lang_key = 'menu.help.developer.reset_storage.confirm';
-			let result = window.confirm((window.tl && tl(lang_key) != lang_key) ? tl(lang_key) : 'Are you sure you want to reset Blockbench to factory settings? This will delete all custom settings, keybindings and installed plugins.');
+			let result = window.confirm((window.tl && tl(lang_key) != lang_key) ? tl(lang_key) : 'Are you sure you want to reset Workbench to factory settings? This will delete all custom settings, keybindings and installed plugins.');
 			if (result) {
 				localStorage.clear();
 				if ('Blockbench' in window) Blockbench.addFlag('no_localstorage_saving');
@@ -67,7 +69,7 @@
 		}
 	</script>
 	<div id="loading_error_message" style="display: none;">
-		<div>An error occurred while loading Blockbench</div>
+		<div>An error occurred while loading Workbench</div>
 		<div id="loading_error_detail" style="color: var(--color-subtle_text);"></div>
 		<button onclick="window.Blockbench ? window.Blockbench.reload() : window.location.reload(true)" class="large" style="margin-right: auto; margin-left: auto;">Reload</button>
 		<button onclick="factoryResetAndReload()" class="large" style="margin-right: auto; margin-left: auto;">Factory Reset</button>
@@ -75,15 +77,12 @@
 		<div id="loading_error_version" style="color: var(--color-subtle_text);"></div>
 	</div>
 	<script type="module" src="dist/bundle.js"></script>
-
 	<div style="display: none;"></div>
-
 	<div id="dialog_wrapper"></div>
-
 	<header>
 		<ul id="mac_window_menu" hidden></ul>
 		<div id="corner_logo" class="app-drag-region">
-			<img class="blockbench_logo" src="assets/logo_text_white.svg" alt="Blockbench" />
+			<img class="blockbench_logo" src="assets/logo_text_white.svg" alt="Workbench" />
 		</div>
 		<ul id="menu_bar" class="scroll_horizontal"></ul>
 		<div id="title_bar_home_button" class="tool hidden" onclick="Interface.tab_bar.openNewTab()"><i class="material-icons icon">home</i></div>
@@ -108,13 +107,9 @@
 			<i class="material-icons icon">install_desktop</i>
 			<span class="tl">web.download_app</span>
 		</a></button>
-	</header>
-	
-
+	</header>	
 	<div id="page_wrapper" class="invisible start_screen">
-
 		<div id="blackout" class="darken"></div>
-
 		<div id="tab_bar" :class="{drag_mode: drag_target_index !== null}">
 			<div id="tab_bar_list" @wheel="mousewheelBar($event)" ref="tab_bar_list">
 				<div
@@ -151,16 +146,11 @@
 				<i class="material-icons">view_module</i>
 			</div>
 		</div>
-
 		<dialog id="action_selector"></dialog>
-
 		<div id="start_screen"></div>
-
 		<div id="work_screen" hidden>
-
 			<div id="main_toolbar">
 				<div class="toolbar_wrapper narrow tools"></div>
-
 				<div class="toolbar_wrapper narrow tool_options"></div>
 				<ul id="mode_selector" v-if="showModes()">
 					<li
@@ -176,44 +166,54 @@
 			</div>
 			
 			<div id="left_bar" class="sidebar"></div>
-
 			<div id="right_bar" class="sidebar"></div>
-
 			<div id="center">
 				<ul id="toast_notification_list"></ul>
-
 				<div id="top_slot"></div>
 				<div id="preview">
 					<div class="clamped_reference_images"></div>
 				</div>
 				<div id="bottom_slot"></div>
-
 				<div id="mobile_panel_overlay" hidden></div>
 			</div>
 			<div id="status_bar"></div>
-
 			<div id="panel_selector_bar"></div>
-
 		</div>
-	
 	</div>
-
 	<script type="module">
-		window.addEventListener('load', () => {
-			setTimeout(() => {
-				if (!window.Blockbench?.setup_successful) {
-					let error_element = document.querySelector('#loading_error_detail');
-					if (error_element && !error_element.innerText) {
-						error_element.innerText = 'Failed to load dist/bundle.js or required assets. Check browser console (F12).';
-					}
-					let loadingEl = document.getElementById('loading_error_message');
-					if (loadingEl) loadingEl.style.display = 'block';
-				} else {
-					let loadingEl = document.getElementById('loading_error_message');
-					if (loadingEl) loadingEl.style.display = 'none';
+		let browser_check_passed = false;
+		// Browser compatibility check
+		try {
+			eval('[1].at(0)');
+			let stylesheet = document.getElementById('setup_stylesheet');
+			if (!stylesheet || !stylesheet.sheet?.cssRules?.length) {
+				throw 'Stylesheet not loaded';
+			}
+			browser_check_passed = true;
+		} catch (err) {
+			console.error(err);
+			let error_element = document.querySelector('#loading_error_detail');
+			if (error_element) error_element.innerHTML = `Incompatible browser version. Please update your web browser.`;
+		}
+
+		function checkLoaded() {
+			if (window.Blockbench?.setup_successful) {
+				let msg = document.getElementById('loading_error_message');
+				if (msg) msg.style.display = 'none';
+				return;
+			}
+			if (!window.Blockbench?.setup_successful || !browser_check_passed) {
+				let msg = document.getElementById('loading_error_message');
+				if (msg) msg.style.display = 'block';
+				if (window.require) {
+					require('@electron/remote').getCurrentWindow().webContents.openDevTools();
+				} else if (window.openDevTools) {
+					window.openDevTools();
 				}
-			}, 1500);
-		});
+			}
+		}
+
+		setTimeout(checkLoaded, 2500);
 	</script>
 </body>
 </html>

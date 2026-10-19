@@ -483,6 +483,14 @@ export class Plugin {
 
 		var scope = this;
 		function register() {
+			if (!Plugins.json[scope.id]) return;
+			jQuery.ajax({
+				url: 'https://blckbn.ch/api/event/install_plugin',
+				type: 'POST',
+				data: {
+					plugin: scope.id
+				}
+			})
 		}
 		if (!isApp) {
 			if (first) register();
@@ -1122,9 +1130,60 @@ ExperimentalSettings.add(
 	'plugin_await_loading_timeout',
 	{type: 'number', label: 'Max plugin await-loading', description: 'Maximum time to wait for plugins to load before opening a project', min: 0.4, value: 2, step: 0.1}
 )
-Plugins.loading_promise = null;
-Plugins.json = {};
-Plugins.download_stats = {};
+Plugins.loading_promise = new Promise((resolve, reject) => {
+	const timeout_seconds = ExperimentalSettings.get('plugin_load_timeout') as number ?? 10;
+	$.ajax({
+		cache: false,
+		url: Plugins.api_path+'.json',
+		timeout: 1_000 * timeout_seconds,
+		dataType: 'json',
+		success(data) {
+			Plugins.json = data;
+
+			resolve();
+			Plugins.loading_promise = null;
+			
+			$.ajax({
+				cache: false,
+				url: 'https://cdn.jsdelivr.net/gh/JannisX11/blockbench-plugins/updates.json',
+				timeout: 1_000 * timeout_seconds,
+				dataType: 'json',
+				success(data) {
+					Plugins.update_info = data;
+					resolve();
+				},
+				error(response, type) {
+					console.error('Failed to load plugin updates data', type, response)
+				}
+			});
+		},
+		error(response, type) {
+			console.error('Could not connect to plugin server:', type, response)
+			resolve();
+			Plugins.loading_promise = null;
+
+			if (settings.cdn_mirror.value == false && navigator.onLine) {
+				settings.cdn_mirror.set(true);
+				console.log('Switching to plugin CDN mirror. Restart to apply.');
+			}
+			if (Plugins.dialog) {
+				if (Plugins.dialog.content_vue) Plugins.dialog.content_vue._data.network_error = response.status;
+				Plugins.dialog.component.data.network_error = response.status;
+			}
+		}
+	});
+	setTimeout(() => {
+		if (!Plugins.loading_promise) return;
+		console.warn(`Connecting to plugin API is taking longer than expected. Plugins will not load until a connection is made or the request times out after ${timeout_seconds} seconds.`)
+	}, 3000);
+})
+
+$.getJSON('https://blckbn.ch/api/stats/plugins?weeks=2', data => {
+	Plugins.download_stats = data;
+	if (Plugins.json) {
+		Plugins.sort();
+	}
+})
 
 export async function loadInstalledPlugins() {
 	if (Plugins.loading_promise) {

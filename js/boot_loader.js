@@ -101,6 +101,28 @@ if (!Blockbench.isWeb || !Blockbench.isPWA) {
 	$.ajaxSetup({ cache: false });
 }
 
+if (Blockbench.startup_count == 1) {
+	try {
+		jQuery.ajax({
+			url: 'https://blckbn.ch/api/event/new_installation',
+			type: 'POST',
+			data: {}
+		})
+	} catch (err) {
+		console.error(err);
+	}
+}
+if (Blockbench.startup_count == 3) {
+	try {
+		jQuery.ajax({
+			url: 'https://blckbn.ch/api/event/recurring_user',
+			type: 'POST',
+			data: {}
+		})
+	} catch (err) {
+		console.error(err);
+	}
+}
 
 Blockbench.on('before_closing', (event) => {
 	if (!Blockbench.hasFlag('no_localstorage_saving')) {
@@ -164,3 +186,6 @@ if (Blockbench.isMobile) {
 document.getElementById('page_wrapper').classList.remove('invisible');
 
 Blockbench.setup_successful = true;
+let loading_err = document.getElementById('loading_error_message');
+if (loading_err) loading_err.style.display = 'none';
+
