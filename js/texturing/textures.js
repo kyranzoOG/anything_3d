@@ -97,22 +97,10 @@ export class Texture {
 		let size_control = {};
 
 		this.img.onload = () => {
-			let dimensions_changed = tex.width !== img.naturalWidth || tex.height !== img.naturalHeight;
-			if (self.width && dimensions_changed) {
-				tex = new THREE.Texture(this.canvas);
-				tex.magFilter = mat.map.magFilter;
-				tex.minFilter = mat.map.minFilter;
-				tex.wrapS = mat.map.wrapS;
-				tex.wrapT = mat.map.wrapT;
-				tex.name = this.name;
-				mat.map = tex;
-				mat.uniforms.map.value = tex;
-				if (Canvas.layered_material) Canvas.updateLayeredTextures();
-			}
-			tex.needsUpdate = true;
+			let dimensions_changed = tex.width !== img.naturalWidth || tex.height !== img.naturalHeight || !self.width;
 
-			self.width = tex.width = img.naturalWidth;
-			self.height = tex.height = img.naturalHeight;
+			self.width = img.naturalWidth;
+			self.height = img.naturalHeight;
 			if (self.selection) self.selection.changeSize(self.width, self.height);
 			if (img.naturalWidth > 16384 || img.naturalHeight > 16384) {
 				self.error = 2;
@@ -126,8 +114,25 @@ export class Texture {
 				self.canvas.width = self.width;
 				self.canvas.height = self.height;
 				self.ctx.drawImage(img, 0, 0);
-				if (UVEditor.vue.texture == this) UVEditor.updateOverlayCanvas();
+				if (UVEditor.vue && UVEditor.vue.texture == this) UVEditor.updateOverlayCanvas();
 			}
+
+			if (dimensions_changed || !mat.map || mat.map.image !== self.canvas) {
+				tex = new THREE.Texture(self.canvas);
+				tex.magFilter = (mat.map && mat.map.magFilter) || THREE.NearestFilter;
+				tex.minFilter = (mat.map && mat.map.minFilter) || THREE.NearestFilter;
+				tex.wrapS = (mat.map && mat.map.wrapS) || THREE.ClampToEdgeWrapping;
+				tex.wrapT = (mat.map && mat.map.wrapT) || THREE.ClampToEdgeWrapping;
+				tex.name = this.name;
+				img.tex = tex;
+				mat.map = tex;
+				mat.uniforms.map.value = tex;
+				if (Canvas.layered_material) Canvas.updateLayeredTextures();
+			}
+			tex.width = self.width;
+			tex.height = self.height;
+			tex.needsUpdate = true;
+			if (mat.map) mat.map.needsUpdate = true;
 
 			if (this.flags.has('update_uv_size_from_resolution')) {
 				this.flags.delete('update_uv_size_from_resolution');

@@ -373,6 +373,8 @@ var codec = new Codec('optifine_entity', {
 
 var format = new ModelFormat({
 	id: 'optifine_entity',
+	show_on_start_screen: false,
+	show_in_new_list: false,
 	extension: 'jem',
 	icon: 'icon-format_optifine',
 	category: 'minecraft',
@@ -382,9 +384,7 @@ var format = new ModelFormat({
 			{type: 'h3', text: tl('mode.start.format.informations')},
 			{text: `* ${tl('format.optifine_entity.info.optifine_required')}
 					* ${tl('format.optifine_entity.info.pivots')}`.replace(/\t+/g, '')
-			},
-			{type: 'h3', text: tl('mode.start.format.resources')},
-			{text: `* [OptiFine Modeling and Animation Tutorial](https://youtu.be/arj2eim42KI)`}
+			}
 		]
 	},
 	model_identifier: false,

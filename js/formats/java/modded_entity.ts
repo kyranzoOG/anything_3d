@@ -1113,6 +1113,8 @@ const animation_codec = new AnimationCodec('modded_entity', {
 })
 
 var format = new ModelFormat('modded_entity', {
+	show_on_start_screen: false,
+	show_in_new_list: false,
 	icon: 'icon-format_java',
 	category: 'minecraft',
 	target: 'Minecraft: Java Edition',

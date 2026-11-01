@@ -286,7 +286,6 @@ export const MenuBar = {
 					}
 				}
 			]},
-			'plugins_window',
 			'edit_session'
 		], {icon: 'draft'})
 		new BarMenu('edit', [
@@ -599,91 +598,9 @@ export const MenuBar = {
 		new BarMenu('help', [
 			new MenuSeparator('search'),
 			{name: 'menu.help.search_action', description: BarItems.action_control.description, keybind: BarItems.action_control.keybind, id: 'search_action', icon: 'search', click: ActionControl.select},
-			new MenuSeparator('links'),
-			{name: 'menu.help.quickstart', id: 'quickstart', icon: 'fas.fa-directions', click: () => {
-				Blockbench.openLink('https://blockbench.net/quickstart/');
-			}},
-			{name: 'menu.help.discord', id: 'discord', icon: 'fab.fa-discord', condition: () => (!settings.classroom_mode.value), click: () => {
-				Blockbench.openLink('http://discord.blockbench.net');
-			}},
-			{name: 'menu.help.wiki', id: 'wiki', icon: 'menu_book', click: () => {
-				Blockbench.openLink('https://blockbench.net/wiki/');
-			}},
-			{name: 'menu.help.report_issue', id: 'report_issue', icon: 'bug_report', click: () => {
-				Blockbench.openLink('https://github.com/JannisX11/blockbench/issues');
-			}},
 			new MenuSeparator('backups'),
 			'view_backups',
 			new MenuSeparator('about'),
-			{name: 'menu.help.developer', id: 'developer', icon: 'fas.fa-wrench', children: [
-				'reload_plugins',
-				{name: 'menu.help.plugin_documentation', id: 'plugin_documentation', icon: 'fa-book', click: () => {
-					Blockbench.openLink('https://www.blockbench.net/wiki/docs/plugin');
-				}},
-				'experimental_settings',
-				'open_dev_tools',
-				{
-					name: 'Error Log',
-					condition: () => window.ErrorLog.length > 0,
-					icon: 'error',
-					color: 'red',
-					keybind: {toString: () => window.ErrorLog.length.toString()} as any,
-					click() {
-						let error_messages = window.ErrorLog.map((error) => {
-							return `${error.message}\n - In .${error.file.split(location.origin).join('')} : ${error.line}`;
-						})
-						let lines = error_messages.slice(0, 64).map((message) => {
-							return Interface.createElement('p', {style: 'word-break: break-word;'}, message);
-						})
-						new Dialog({
-							id: 'error_log',
-							title: 'Error Log',
-							lines,
-							buttons: ['action.copy', 'dialog.close'],
-							confirmIndex: 1,
-							cancelIndex: 1,
-							onButton(index) {
-								if (index == 0) {
-									Clipbench.setText(error_messages.slice(0, 256).join('\n'));
-								}
-							}
-						}).show();
-					}
-				},
-				{name: 'Expose Native Modules', icon: 'terminal', condition: isApp && (() => {
-					return currentwindow.webContents.isDevToolsOpened();
-				}), click: () => {
-					exposeNativeApisInDevTools();
-				}},
-				{name: 'menu.help.developer.reset_storage', icon: 'fas.fa-hdd', click: () => {
-					factoryResetAndReload();
-				}},
-				{name: 'menu.help.developer.unlock_projects', id: 'unlock_projects', icon: 'vpn_key', condition: () => ModelProject.all.some(project => project.locked), click() {
-					ModelProject.all.forEach(project => project.locked = false);
-				}},
-				{
-					name: 'Uncorrupt Mesh',
-					id: 'uncorrupt_mesh',
-					icon: 'build',
-					condition: () => Mesh.hasSelected(),
-					click() {
-						// @ts-ignore
-						uncorruptMesh();
-					}
-				},
-				{name: 'menu.help.developer.cache_reload', id: 'cache_reload', icon: 'cached', condition: !isApp, click: () => {
-					if('caches' in window){
-						caches.keys().then((names) => {
-							names.forEach(async (name) => {
-								await caches.delete(name)
-							})
-						})
-					}
-					// @ts-expect-error
-					window.location.reload(true)
-				}},
-				'reload',
-			]},
 			'reset_layout',
 			'about_window'
 		], {icon: 'help'})

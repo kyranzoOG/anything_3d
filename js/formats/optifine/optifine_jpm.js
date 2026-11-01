@@ -55,6 +55,7 @@ var part_format = new ModelFormat({
 		icon: 'icon-format_optifine',
 		category: 'minecraft',
 		show_on_start_screen: false,
+		show_in_new_list: false,
 		model_identifier: false,
 		box_uv: true,
 		optional_box_uv: true,

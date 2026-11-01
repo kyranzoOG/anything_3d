@@ -950,6 +950,8 @@ const codec = new Codec('java_block', {
 })
 
 const format = new ModelFormat('java_block', {
+	show_on_start_screen: false,
+	show_in_new_list: false,
 	icon: 'icon-format_block',
 	category: 'minecraft',
 	target: 'Minecraft: Java Edition',

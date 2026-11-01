@@ -495,13 +495,9 @@ onVueSetup(async function() {
 								<li class="format_category">
 									<label>${tl('mode.start.info')}</label>
 									<ul>
-										<li class="format_entry start_screen_link" @click="openLink('https://blockbench.net/quickstart')">
-											<span class="icon_wrapper f_left"><i class="material-icons">help</i></span>
-											<label>${tl('menu.help.quickstart')}</label>
-										</li>
-										<li class="format_entry start_screen_link" @click="openLink('https://blockbench.net/wiki')">
+										<li class="format_entry start_screen_link" @click="">
 											<span class="icon_wrapper f_left"><i class="material-icons">menu_book</i></span>
-											<label>Blockbench Wiki</label>
+											<label>Wiki</label>
 										</li>
 									</ul>
 								</li>
@@ -629,58 +625,8 @@ if (isApp && location.href.endsWith('/blockbench/index.html')) {
 	}
 }
 
-var news_call = $.ajax({
-	cache: false,
-	url: 'https://web.blockbench.net/content/news.json',
-	dataType: 'json'
-});
+var news_call = null;
 documentReady.then(() => {
-
-	//Bluesky
-	let bsky_ad;
-	Blockbench.onUpdateTo('4.12.2', () => {
-		//Bluesky
-		if (!settings.classroom_mode.value) {
-			bsky_ad = true;
-			addStartScreenSection('bluesky_link', {
-				color: 'rgb(32, 139, 254);',
-				text_color: '#ffffff',
-				graphic: {type: 'icon', icon: 'fab.fa-bluesky'},
-				text: [
-					{type: 'h3', text: 'Blockbench on Bluesky'},
-					{text: 'Follow Blockbench on Bluesky for the latest news & cool models from the community! [@blockbench.net](https://bsky.app/profile/blockbench.net)'}
-				],
-				last: true
-			})
-		}
-	})
-	if (!settings.classroom_mode.value && !bsky_ad && Blockbench.startup_count < 20 && Blockbench.startup_count % 5 === 4) {
-		bsky_ad = true;
-		addStartScreenSection('bluesky_link', {
-			color: 'rgb(32, 139, 254);',
-			text_color: '#ffffff',
-			graphic: {type: 'icon', icon: 'fab.fa-bluesky'},
-			text: [
-				{type: 'h3', text: 'Blockbench on Bluesky'},
-				{text: 'Follow Blockbench on Bluesky for the latest news & cool models from the community! [@blockbench.net](https://bsky.app/profile/blockbench.net)'}
-			],
-			last: true
-		})
-	}
-	//Discord
-	if (!settings.classroom_mode.value && Blockbench.startup_count < 6 && !bsky_ad) {
-		addStartScreenSection('discord_link', {
-			color: '#5865F2',
-			text_color: '#ffffff',
-			graphic: {type: 'icon', icon: 'fab.fa-discord'},
-			text: [
-				{type: 'h2', text: 'Discord Server'},
-				{text: 'You need help with modeling or you want to chat about Blockbench? Join the official [Blockbench Discord](https://discord.gg/WVHg5kH)!'}
-			],
-			last: true
-		})
-	}
-
 	// Quick Setup
 	if (Blockbench.startup_count <= 1) {
 		

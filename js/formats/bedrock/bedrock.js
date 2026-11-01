@@ -1554,6 +1554,8 @@ codec.compileGroup = compileGroup;
 
 var entity_format = new ModelFormat({
 	id: 'bedrock',
+	show_on_start_screen: false,
+	show_in_new_list: false,
 	extension: 'json',
 	icon: 'icon-format_bedrock',
 	category: 'minecraft',
@@ -1561,11 +1563,7 @@ var entity_format = new ModelFormat({
 	format_page: {
 		content: [
 			{type: 'h3', text: tl('mode.start.format.informations')},
-			{text: `* ${tl('format.bedrock.info.textures')}`},
-			{type: 'h3', text: tl('mode.start.format.resources')},
-			{text: `* [Article on modeling and implementation](https://www.blockbench.net/wiki/guides/bedrock-modeling)
-					* [Modeling Tutorial Series](https://www.youtube.com/watch?v=U9FLteWmFzg&list=PLvULVkjBtg2SezfUA8kHcPUGpxIS26uJR)`.replace(/\t+/g, '')
-			}
+			{text: `* ${tl('format.bedrock.info.textures')}`}
 		]
 	},
 	node_name_regex: '\\w.-',
@@ -1601,6 +1599,8 @@ Object.defineProperty(entity_format, 'per_texture_uv_size', {
 
 var block_format = new ModelFormat({
 	id: 'bedrock_block',
+	show_on_start_screen: false,
+	show_in_new_list: false,
 	category: 'minecraft',
 	extension: 'json',
 	icon: 'icon-format_bedrock_block',
@@ -1609,15 +1609,10 @@ var block_format = new ModelFormat({
 		content: [
 			{type: 'h3', text: tl('mode.start.format.informations')},
 			{text: `* ${tl('format.bedrock_block.info.size_limit')}`},
-			{text: `* ${tl('format.bedrock_block.info.textures')}`},
-			{type: 'h3', text: tl('mode.start.format.resources')},
-			{text: `* [Article on implementing custom blocks](https://learn.microsoft.com/en-us/minecraft/creator/documents/customblock)
-					* [Modeling Tutorial Series](https://www.youtube.com/watch?v=U9FLteWmFzg&list=PLvULVkjBtg2SezfUA8kHcPUGpxIS26uJR)`.replace(/\t+/g, '')
-			}
+			{text: `* ${tl('format.bedrock_block.info.textures')}`}
 		]
 	},
 	node_name_regex: '\\w.-',
-	show_on_start_screen: true,
 	rotate_cubes: true,
 	box_uv: false,
 	optional_box_uv: true,

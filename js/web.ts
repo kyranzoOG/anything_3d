@@ -168,6 +168,7 @@ const NULL = null;
 export {
 	NULL as recent_projects,
 	NULL as initializeDesktopApp,
+	NULL as loadOpenWithBlockbenchFile,
 	NULL as loadOpenWithWorkbenchFile,
 	NULL as updateRecentProjects,
 	NULL as addRecentProject,

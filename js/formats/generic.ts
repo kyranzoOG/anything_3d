@@ -7,11 +7,10 @@ new ModelFormat('free', {
 			{type: 'h3', text: tl('mode.start.format.informations')},
 			{text: `* ${tl('format.free.info.meshes')}
 					* ${tl('format.free.info.limitation')}`.replace(/\t+/g, '')
-			},
-			{type: 'h3', text: tl('mode.start.format.resources')},
-			{text: `* [Low-Poly Modeling Tutorial](https://www.youtube.com/watch?v=WbyCbA1c8BM)`}
+			}
 		]
 	},
+	single_texture_default: true,
 	meshes: true,
 	billboards: true,
 	armature_rig: true,

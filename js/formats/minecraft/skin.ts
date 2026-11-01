@@ -297,9 +297,7 @@ export const format = new ModelFormat('skin', {
 			{type: 'h3', text: tl('mode.start.format.informations')},
 			{text: `* ${tl('format.skin.info.skin')}
 					* ${tl('format.skin.info.model')}`.replace(/\t+/g, '')
-			},
-			{type: 'h3', text: tl('mode.start.format.resources')},
-			{text: `* [Skin Design Tutorial](https://youtu.be/xC81Q3HGraE)`}
+			}
 		]
 	},
 	can_convert_to: false,
