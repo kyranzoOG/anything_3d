@@ -2035,8 +2035,6 @@ Preview.prototype.menu = new Menu([
 	'reference_image_from_clipboard',
 	'toggle_all_reference_images',
 	'edit_reference_images',
-	'preview_scene',
-	'preview_models',
 	{
 		icon: 'icon-player',
 		name: 'settings.display_skin',
@@ -2145,25 +2143,6 @@ export const ViewOptionsDialog = new ConfigDialog('preview_view_options', {
 			type: 'color', label: 'dialog.preview_options.background.custom_color',
 			condition: result => result.background == 'custom_color'
 		},
-		preview_scene: {
-			label: 'action.preview_scene',
-			type: 'select',
-			options() {
-				let result = {};
-				for (let category in PreviewScene.menu_categories) {
-					let options = PreviewScene.menu_categories[category];
-					if (options._label) {
-						let group_id = 'options_'+toSnakeCase(options._label);
-						result[group_id] = new MenuSeparator(group_id, options._label);
-					}
-					for (let key in options) {
-						if (key.startsWith('_')) continue;
-						result[key] = options[key];
-					}
-				}
-				return result;
-			}
-		},
 		shading: { label: 'settings.shading', type: 'checkbox', style: 'toggle_switch' },
 		grids: { label: 'settings.grids', type: 'checkbox', style: 'toggle_switch' },
 		ground_plane: { label: 'settings.ground_plane', type: 'checkbox', style: 'toggle_switch' },
@@ -2177,7 +2156,6 @@ export const ViewOptionsDialog = new ConfigDialog('preview_view_options', {
 		this.form.setValues({
 			background: custom_color ? 'custom_color' : (settings.preview_checkerboard.value ? 'checkerboard' : 'solid'),
 			custom_background_color: custom_color,
-			preview_scene: PreviewScene.active ? PreviewScene.active.id : 'none',
 			shading: settings.shading.value,
 			grids: settings.grids.value,
 			ground_plane: settings.ground_plane.value,
@@ -2188,14 +2166,6 @@ export const ViewOptionsDialog = new ConfigDialog('preview_view_options', {
 		});
 	},
 	onFormChange(result: PreviewOptionsFormResult) {
-		let preview_scene_id = PreviewScene.active ? PreviewScene.active.id : 'none';
-		if (preview_scene_id != result.preview_scene) {
-			if (result.preview_scene == 'none') {
-				PreviewScene.active.unselect();
-			} else {
-				PreviewScene.scenes[result.preview_scene]?.select();
-			}
-		}
 		if (result.background == 'checkerboard') {
 			settings.preview_checkerboard.set(true);
 		} else {

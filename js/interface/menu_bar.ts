@@ -254,7 +254,6 @@ export const MenuBar = {
 			{name: 'menu.file.preferences', id: 'preferences', icon: 'tune', children: [
 				'settings_window',
 				'keybindings_window',
-				'theme_window',
 				{
 					id: 'profiles',
 					name: 'data.settings_profile',
@@ -581,8 +580,6 @@ export const MenuBar = {
 			'painting_grid',
 			new MenuSeparator('references'),
 			'bedrock_animation_mode',
-			'preview_scene',
-			'preview_models',
 			'edit_reference_images',
 			new MenuSeparator('model'),
 			'hide_everything_except_selection',

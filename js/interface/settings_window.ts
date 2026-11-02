@@ -124,7 +124,6 @@ onVueSetup(function() {
 		title_menu: new Menu([
 			'settings_window',
 			'keybindings_window',
-			'theme_window',
 			'about_window',
 		]),
 		sidebar: {
