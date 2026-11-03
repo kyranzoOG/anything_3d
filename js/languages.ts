@@ -1,48 +1,8 @@
-import ar from '../lang/ar.json';
-import cz from '../lang/cz.json';
-import de from '../lang/de.json';
 import en from '../lang/en.json';
-import es from '../lang/es.json';
-import fr from '../lang/fr.json';
-import it from '../lang/it.json';
-import ja from '../lang/ja.json';
-import ko from '../lang/ko.json';
-import nl from '../lang/nl.json';
-import pl from '../lang/pl.json';
-import pt from '../lang/pt.json';
-import pt_br from '../lang/pt_br.json';
-import ru from '../lang/ru.json';
-import sv from '../lang/sv.json';
-import th from '../lang/th.json';
-import tr from '../lang/tr.json';
-import uk from '../lang/uk.json';
-import vi from '../lang/vi.json';
-import zh from '../lang/zh.json';
-import zh_tw from '../lang/zh_tw.json';
 
 type Language = Record<string, string>;
 export const data: Record<string, Language> = {
-	ar,
-	cz,
-	de,
 	en,
-	es,
-	fr,
-	it,
-	ja,
-	ko,
-	nl,
-	pl,
-	pt,
-	pt_br,
-	ru,
-	sv,
-	th,
-	tr,
-	uk,
-	vi,
-	zh,
-	zh_tw,
 };
 
 // @ts-ignore
@@ -97,26 +57,6 @@ export const Language = {
 	code: 'en',
 	options: {
 		en: 'English',
-		ar: 'العربية - Arabic',
-		cz: 'Čeština - Czech',
-		de: 'Deutsch - German',
-		es: 'Espa\u00F1ol - Spanish',
-		fr: 'Fran\u00E7ais - French',
-		it: 'Italiano - Italian',
-		ja: '\u65E5\u672C\u8A9E - Japanese',
-		ko: '\uD55C\uAD6D\uC5B4 - Korean',
-		nl: 'Nederlands - Dutch',
-		pl: 'Polski - Polish',
-		pt: 'Portugu\u00EAs - Portuguese',
-		pt_br: 'Português (Brasil) - Portuguese (Brazil)',
-		ru: '\u0440\u0443\u0441\u0441\u043A\u0438\u0439 - Russian',
-		sv: 'Svenska - Swedish',
-		th: 'ภาษาไทย - Thai',
-		tr: 'Türkçe - Turkish',
-		uk: 'Українська - Ukrainian',
-		vi: 'Tiếng việt - Vietnamese',
-		zh: '简体中文 - Chinese (simplified)',
-		zh_tw: '繁體中文 - Chinese (traditional, Taiwan)',
 	},
 	/**
 	 * Add translations for custom translation strings
@@ -133,23 +73,9 @@ export const Language = {
 	toString: () => Language.code
 }
 
-
-// Get language code
-let code;
-try {
-	code = JSON.parse(localStorage.getItem('settings')).language.value
-} catch (err) {}
-
-if (!code) {
-	code = navigator.language.replace(/-\w+/, '')
-}
-if (code && Language.options[code]) {
-	Language.code = code
-	document.body.parentElement.setAttribute('lang', Language.code);
-}
-
-
-Language.data = data[Language.code];
+Language.code = 'en';
+document.body.parentElement.setAttribute('lang', 'en');
+Language.data = data.en;
 
 const global = {
 	tl,

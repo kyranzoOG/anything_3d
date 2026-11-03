@@ -153,6 +153,8 @@ if (options.watch || options.serve) {
             host: options.host,
             port: options.port
         });
+        console.log(`Server listening on http://${options.host}:${options.port}`);
+        await new Promise(() => {});
     }
 } else {
     if (options.analyze) config.metafile = true;

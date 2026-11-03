@@ -114,6 +114,7 @@ export const MenuBar = {
 					for (let key in Formats) {
 						let format = Formats[key];
 						if (format.show_in_new_list === false) continue;
+						if (key === 'bedrock' || key === 'bedrock_old' || key === 'bedrock_block' || key === 'java_block' || key === 'modded_entity' || key === 'optifine_jem' || key === 'optifine_jpm') continue;
 						arr.push({
 							id: format.id,
 							name: (redact && format.confidential) ? `[${tl('generic.redacted')}]` : format.name,
@@ -124,10 +125,11 @@ export const MenuBar = {
 							}
 						})
 					}
-					arr.push(new MenuSeparator('loaders', 'format_category.loaders'));
+					let loader_entries = [];
 					for (let key in ModelLoader.loaders) {
 						let loader = ModelLoader.loaders[key];
-						arr.push({
+						if (key === 'bedrock_player_model' || loader.show_on_start_screen === false) continue;
+						loader_entries.push({
 							id: loader.id,
 							name: (redact && loader.confidential) ? `[${tl('generic.redacted')}]` : loader.name,
 							icon: loader.icon,
@@ -136,6 +138,10 @@ export const MenuBar = {
 								loader.new()
 							}
 						})
+					}
+					if (loader_entries.length) {
+						arr.push(new MenuSeparator('loaders', 'format_category.loaders'));
+						arr.push(...loader_entries);
 					}
 					return arr;
 				}

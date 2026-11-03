@@ -408,6 +408,8 @@ var format = new ModelFormat({
 	icon: 'icon-format_bedrock_legacy',
 	category: 'minecraft',
 	show_on_start_screen: false,
+	show_in_new_list: false,
+	can_convert_to: false,
 	box_uv: true,
 	single_texture: true,
 	bone_rig: true,

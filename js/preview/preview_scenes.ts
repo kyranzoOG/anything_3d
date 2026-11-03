@@ -308,9 +308,7 @@ export class PreviewModel implements Deletable {
 	 * Enables the model in the preview
 	 */
 	enable() {
-		Canvas.scene.add(this.model_3d);
-		this.enabled = true;
-		this.update();
+		this.enabled = false;
 	}
 	/**
 	 * Disables the model in the preview

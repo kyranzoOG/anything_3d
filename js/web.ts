@@ -26,10 +26,6 @@ export function initializeWebApp() {
 			</div>`);
 		button.insertBefore('#start_files');
 	}
-	if (!Blockbench.isTouch && !Blockbench.isPWA) {
-		$('#web_download_button').show()
-	}
-
 	if (Blockbench.browser == 'firefox') {
 		document.body.style.imageRendering = 'crisp-edges'
 	}
@@ -65,13 +61,7 @@ addEventListener('popstate', e => {
 	window.history.pushState({}, '');
 })
 
-try {
-	window.matchMedia('(display-mode: standalone)').addEventListener('change', (evt) => {
-		if (!Blockbench.isMobile) $('#web_download_button').toggle(!evt.matches);
-	});
-} catch (err) {
-	if (!Blockbench.isMobile) $('#web_download_button').hide();
-}
+
 
 export async function loadInfoFromURL() {
 	if (typeof Blockbench.queries.session == 'string') {

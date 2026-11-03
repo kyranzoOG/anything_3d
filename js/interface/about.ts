@@ -11,27 +11,6 @@ BARS.defineActions(() => {
 				isApp,
 				version_label: Blockbench.version
 			};
-			jQuery.ajax({
-				url: 'https://api.github.com/repos/JannisX11/blockbench/releases/latest',
-				cache: false,
-				type: 'GET',
-				success(release) {
-					let releaseVersion = release.tag_name.replace(/^v/, '');
-					let display_version = VersionUtil.format(Blockbench.version);
-					switch (VersionUtil.compare(Blockbench.version, releaseVersion)) {
-						case 1:
-							data.version_label = `${display_version} (Pre-release)`;
-							break;
-						case 0:
-							data.version_label = `${display_version} (${tl('about.version.up_to_date')}😄)`;
-							break;
-						case -1:
-							data.version_label = `${display_version} (${tl('about.version.update_available', [releaseVersion])})`;
-							break;
-					}
-				},
-				error(err) {}
-			})
 
 			new Dialog({
 				id: 'about',
@@ -52,53 +31,16 @@ BARS.defineActions(() => {
 							</div>
 							<p>Version <span>{{ version_label }}</span></p>
 
-							<div class="socials">
-								<a class="open-in-browser" href="https://blockbench.net">
-									<i class="icon icon-blockbench_inverted" style="transform: scale(1.3);"></i>
-									<label>Website</label>
-								</a>
-								<a class="open-in-browser" href="https://bsky.app/profile/blockbench.net">
-									<i class="icon fab fa-bluesky"></i>
-									<label>Bluesky</label>
-								</a>
-								<a class="open-in-browser" href="https://twitter.com/blockbench">
-									<i class="icon fab fa-twitter"></i>
-									<label>Twitter</label>
-								</a>
-								<a class="open-in-browser" href="http://discord.blockbench.net">
-									<i class="icon fab fa-discord"></i>
-									<label>Discord</label>
-								</a>
-								<a class="open-in-browser" href="https://youtube.com/Blockbench3D">
-									<i class="icon fab fa-youtube"></i>
-									<label>YouTube</label>
-								</a>
-								<a class="open-in-browser" href="https://github.com/JannisX11/blockbench">
-									<i class="icon fab fa-github"></i>
-									<label>GitHub</label>
-								</a>
-								<a class="open-in-browser" href="https://blockbench.net/wiki">
-								<i class="icon material-icons">menu_book</i>
-									<label>Wiki</label>
-								</a>
-							</div>
-
-							<p>Created by Jannis Petersen</p>
-							<p style="color: var(--color-subtle_text);">A free and open-source low-poly model editor. To make 3D art easy and accessible for everyone.
-								For all who enjoy stylized 3D art. For game developers, students, content creators, and for the Minecraft community.</p>
+							<p style="color: var(--color-subtle_text); font-size: 1.05em; line-height: 1.6; margin: 16px 0;">
+								Workbench is a dedicated low-poly 3D modeling and animation software designed for Multicraft build and mine game, stylized 3D art, and indie games. Create custom characters, textures, and models with ease.
+							</p>
 
 							<h4>SPECIAL THANKS TO</h4>
 							<ul class="multi_column_list special_thanks_mentions">
-								<li>Mojang Studios</li>
+								<li>Multicraft build and mine game</li>
 								<li>All contributors</li>
-								<li>The community moderators</li>
-								<li>All donators</li>
+								<li>The open-source community</li>
 								<li>All translators</li>
-								<li>Wacky</li>
-								<li>Ewan Howell and Lukas</li>
-								<li>SirBenet</li>
-								<li>Sultan Taha and Kanno</li>
-								<li>The Blockbench Community</li>
 							</ul>
 
 							<h4>FRAMEWORKS, LIBRARIES, AND ICONS</h4>
@@ -135,9 +77,7 @@ BARS.defineActions(() => {
 								<li><a class="open-in-browser" href="https://github.com/JannisX11/wintersky">Wintersky</a></li>
 							</ul>
 
-							<p style="margin-top: 20px">Released under the <a class="open-in-browser" href="https://github.com/JannisX11/blockbench/blob/master/LICENSE.MD">GPL 3.0 license</a></p>
-							<p><a class="open-in-browser" href="https://www.blockbench.net/privacy-policy">Privacy Policy</a></p>
-
+							<p style="margin-top: 20px">Released under the GPL 3.0 license</p>
 						</div>`
 				}
 			}).show()

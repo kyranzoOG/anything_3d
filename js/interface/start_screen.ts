@@ -704,13 +704,6 @@ documentReady.then(() => {
 						</div>
 						<p v-if="language != language_original">{{ tl('message.restart_to_update') }}</p>
 					</div>
-					<div style="width: 640px;">
-						<label>${tl('dialog.settings.theme')}:</label>
-						<div class="quick_setup_theme" :class="{selected: theme == 'default'}" @click="loadTheme('default')"><div :style="getThemeThumbnailStyle('default')"></div>Dark</div>
-						<div class="quick_setup_theme" :class="{selected: theme == 'default_light'}" @click="loadTheme('default_light')"><div :style="getThemeThumbnailStyle('default_light')"></div>Light</div>
-						<div class="quick_setup_theme" :class="{selected: theme == 'contrast'}" @click="loadTheme('contrast')"><div :style="getThemeThumbnailStyle('contrast')"></div>Contrast</div>
-						<div class="quick_setup_theme more_themes" @click="openThemes()"><div><i class="material-icons">more_horiz</i></div>{{ tl('mode.start.quick_setup.more_themes') }}</div>
-					</div>
 				</section>
 			`
 		}).$mount(section);

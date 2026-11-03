@@ -850,43 +850,8 @@ if (isApp && localStorage.getItem('themes_sideloaded')) {
 }
 
 export function loadThemes() {
-	let stored_theme_data: ThemeData | undefined;
-	try {
-		if (localStorage.getItem('theme')) {
-			stored_theme_data = JSON.parse(localStorage.getItem('theme'))
-		}
-	} catch (err) {}
-
-	if (stored_theme_data) {
-		let stored_theme = new CustomTheme(stored_theme_data);
-
-		// Check for updates
-		if (stored_theme.source == 'repository' && stored_theme.id) {
-			CustomTheme.loadTheme(stored_theme);
-			fetch(`https://cdn.jsdelivr.net/gh/JannisX11/blockbench-themes/themes/${stored_theme.id}.bbtheme`).then(async (result) => {
-				let text_content = await result.text();
-				if (!text_content) return;
-				let theme = new CustomTheme().parseBBTheme(text_content);
-
-				if ((theme.version && !stored_theme.version) || (theme.version && stored_theme.version && VersionUtil.compare(theme.version, '>', stored_theme.version))) {
-					// Update theme
-					stored_theme.extend(theme);
-					stored_theme.source = 'repository';
-					stored_theme.load();
-					console.log(`Updated Theme "${stored_theme.id}" to v${theme.version}`);
-				}
-			});
-		} else if ((stored_theme.source == 'built_in' || stored_theme.source == 'file') && stored_theme.id) {
-			let match = CustomTheme.themes.find(t => t.id == stored_theme.id);
-			if (match) {
-				match.option_values = stored_theme.option_values;
-				match.load();
-			}
-			
-		} else if (stored_theme.source == 'custom') {
-			CustomTheme.loadTheme(stored_theme);
-		}
-	}
+	let dark = CustomTheme.themes.find(t => t.id == 'dark') || new CustomTheme().parseBBTheme(DarkTheme, true);
+	dark.load();
 }
 
 BARS.defineActions(function() {
@@ -894,37 +859,20 @@ BARS.defineActions(function() {
 		name: tl('dialog.settings.theme') + '...',
 		icon: 'style',
 		category: 'blockbench',
-		click: function () {
-			CustomTheme.dialog.show();
-		}
+		condition: () => false,
+		click: function () {}
 	})
 	new Action('import_theme', {
 		icon: 'folder',
 		category: 'blockbench',
-		click: function () {
-			Blockbench.import({
-				resource_id: 'config',
-				extensions: ['bbtheme'],
-				type: 'Blockbench Theme'
-			}, function(files) {
-				CustomTheme.import(files[0]);
-			})
-		}
+		condition: () => false,
+		click: function () {}
 	})
 	new Action('export_theme', {
 		icon: 'style',
 		category: 'blockbench',
-		click: function () {
-			let id = CustomTheme.selected.id || '';
-			let content = CustomTheme.selected.compileBBTheme();
-			Blockbench.export({
-				resource_id: 'config',
-				type: 'Blockbench Theme',
-				extensions: ['bbtheme'],
-				name: id,
-				content
-			})
-		}
+		condition: () => false,
+		click: function () {}
 	})
 })
 const global = {
