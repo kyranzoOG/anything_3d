@@ -26,8 +26,9 @@ BARS.defineActions(() => {
 					data() {return data},
 					template: `
 						<div>
-							<div class="blockbench_logo" id="about_page_title">
-								<img src="assets/logo_text_white.svg" alt="Workbench" width="340px">
+							<div class="workbench_about_logo" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; margin: 12px auto 20px auto; text-align: center;">
+								<img src="workbench_assets/workbench_grid.svg" alt="Workbench" style="width: 88px; height: 88px; filter: drop-shadow(0 0 16px rgba(190, 242, 100, 0.55));" />
+								<span style="font-weight: 900; font-size: 24px; letter-spacing: 4px; color: #ffffff; text-transform: uppercase;">WORK<span style="color: #BEF264;">BENCH</span></span>
 							</div>
 							<p>Version <span>{{ version_label }}</span></p>
 

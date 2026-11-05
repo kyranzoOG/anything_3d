@@ -10,7 +10,7 @@
 		width: 100%;
 		padding: 36px 0;
 		overflow-y: auto;
-		background: linear-gradient(180deg, var(--color-ui) 5%, var(--color-dark) 60%);
+		background: radial-gradient(circle at 50% 25%, rgba(10, 15, 4, 0.45) 0%, rgba(0, 0, 0, 0.75) 100%);
 		--start-screen-width: 1000px;
 	}
 	body.is_mobile #start_screen {
@@ -111,10 +111,14 @@
 		margin: 0;
 		height: 130px;
 		position: relative;
-		background-color: var(--color-elevated);
-		box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-		border-radius: 5px;
+		background-color: rgba(12, 24, 7, 0.65);
+		backdrop-filter: blur(8px);
+		-webkit-backdrop-filter: blur(8px);
+		border: 1px solid rgba(190, 242, 100, 0.2);
+		box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.4);
+		border-radius: 10px;
 		cursor: pointer;
+		transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 	#start_screen .recent_project.thumbnail .thumbnail_image {
 		display: block;
@@ -125,7 +129,10 @@
 		pointer-events: none;
 	}
 	#start_screen .recent_project.thumbnail:hover {
-		background-color: var(--color-selected);
+		background-color: rgba(22, 44, 12, 0.85);
+		border-color: #BEF264;
+		box-shadow: 0 0 20px rgba(190, 242, 100, 0.35), 0 8px 24px rgba(0, 0, 0, 0.6);
+		transform: translateY(-2px);
 	}
 	#start_screen .recent_project.thumbnail .recent_project_name {
 		font-size: 1em;
@@ -168,11 +175,14 @@
 		height: auto;
 		margin-left: auto;
 		margin-right: auto;
-		background: linear-gradient(180deg, var(--color-ui) 160px, var(--color-back) 1000px);
-		box-shadow: 0 0 18px #00000060;
+		background: rgba(6, 14, 4, 0.72) !important;
+		backdrop-filter: blur(20px);
+		-webkit-backdrop-filter: blur(20px);
+		border: 1px solid rgba(190, 242, 100, 0.25) !important;
+		box-shadow: 0 16px 48px rgba(0, 0, 0, 0.75), 0 0 24px rgba(190, 242, 100, 0.08), inset 0 1px 0 rgba(190, 242, 100, 0.15) !important;
 		overflow-x: hidden;
 		image-rendering: auto;
-		border-radius: 6px;
+		border-radius: 14px;
 	}
 	#start_screen > content > section {
 		width: 100%;
@@ -435,11 +445,15 @@
 		margin-left: 24px;
 	}
 	#start_files li.format_entry {
-		padding: 4px 0;
+		padding: 8px 14px;
 		cursor: pointer;
-		font-size: 18px;
-		padding-left: 18px;
-		border-radius: 6px;
+		font-size: 16px;
+		margin: 4px 10px;
+		border-radius: 8px;
+		background: rgba(12, 22, 6, 0.5);
+		border: 1px solid rgba(190, 242, 100, 0.15);
+		color: #ffffff;
+		transition: all 0.15s ease-in-out;
 	}
 	#start_files li.format_entry span.icon_wrapper {
 		height: 30px;
@@ -450,11 +464,17 @@
 		cursor: inherit;
 	}
 	#start_files li.format_entry:hover {
-		color: var(--color-light);
+		color: #ffffff;
+		background: rgba(22, 42, 12, 0.75);
+		border-color: rgba(190, 242, 100, 0.4);
+		transform: translateX(3px);
 	}
 	#start_files li.format_entry.selected {
-		background-color: var(--color-accent);
-		color: var(--color-accent_text);
+		background-color: #BEF264 !important;
+		color: #000000 !important;
+		font-weight: 700;
+		border-color: #BEF264 !important;
+		box-shadow: 0 0 18px rgba(190, 242, 100, 0.6), 0 0 32px rgba(190, 242, 100, 0.22) !important;
 	}
 	#start_files li.format_entry.selected::after {
 		float: right;
@@ -494,13 +514,16 @@
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
-		gap: 4px;
+		gap: 6px;
 	}
 	.format_target span {
-		padding: 2px 10px;
-		background-color: var(--color-accent);
-		border-radius: 16px;
-		color: var(--color-accent_text);
+		padding: 3px 12px;
+		background-color: rgba(14, 26, 8, 0.75);
+		border: 1px solid rgba(190, 242, 100, 0.3);
+		border-radius: 9999px;
+		color: #BEF264;
+		font-size: 12px;
+		font-weight: 600;
 	}
 	#start_files .button_bar {
 		text-align: left;
@@ -517,11 +540,25 @@
 	}
 	.start_screen_format_page button#create_new_model_button {
 		width: 100%;
-		height: 40px;
+		height: 44px;
+		background: #BEF264 !important;
+		color: #000000 !important;
+		font-weight: 800 !important;
+		border-radius: 10px !important;
+		border: none !important;
+		font-size: 15px !important;
+		letter-spacing: 0.5px !important;
+		box-shadow: 0 0 22px rgba(190, 242, 100, 0.65), 0 0 44px rgba(190, 242, 100, 0.25) !important;
+		cursor: pointer;
+		transition: transform 0.15s ease, box-shadow 0.15s ease;
+	}
+	.start_screen_format_page button#create_new_model_button:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 0 30px rgba(190, 242, 100, 0.85), 0 0 55px rgba(190, 242, 100, 0.35) !important;
 	}
 	.start_screen_format_page button#create_new_model_button > i {
 		vertical-align: bottom;
-		margin-right: 3px;
+		margin-right: 6px;
 		margin-bottom: 2px;
 	}
 

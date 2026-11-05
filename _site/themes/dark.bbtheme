@@ -1,0 +1,26 @@
+/*
+id: default
+name: Workbench Pistachio
+author: Workbench
+*/
+body {
+	--color-ui: #091205;
+	--color-back: #000000;
+	--color-dark: #000000;
+	--color-border: #243d12;
+	--color-selected: #2d4f16;
+	--color-elevated: #0f1c08;
+	--color-button: #162a0a;
+	--color-bright_ui: #BEF264;
+	--color-accent: #BEF264;
+	--color-frame: #000000;
+	--color-text: #ffffff;
+	--color-light: #ffffff;
+	--color-accent_text: #000000;
+	--color-bright_ui_text: #000000;
+	--color-subtle_text: #a3cc72;
+	--color-grid: #24380c;
+	--color-wireframe: #BEF264;
+	--color-checkerboard: #040702;
+}
+

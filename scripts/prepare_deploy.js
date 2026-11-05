@@ -21,7 +21,7 @@ function copyRecursive(src, dest) {
     }
 }
 
-const foldersToCopy = ['dist', 'css', 'assets', 'icons', 'lang', 'content', 'font', 'lib', 'themes', 'keymaps'];
+const foldersToCopy = ['dist', 'css', 'assets', 'workbench_assets', 'icons', 'lang', 'content', 'font', 'lib', 'themes', 'keymaps'];
 for (const folder of foldersToCopy) {
     copyRecursive(folder, path.join(outDir, folder));
 }

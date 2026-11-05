@@ -9,6 +9,7 @@ import { initializeDesktopApp, loadOpenWithBlockbenchFile } from "./desktop";
 import { AutoBackup } from "./auto_backup";
 import { initReferenceImages } from "./preview/reference_images";
 import { initCanvas } from "./preview/canvas";
+import { initInteractiveGrid } from "./interactive_grid";
 
 Interface.page_wrapper = document.getElementById('page_wrapper');
 Interface.work_screen = document.getElementById('work_screen');
@@ -53,6 +54,7 @@ if (isApp === false) {
 
 setupPreviews()
 initCanvas()
+initInteractiveGrid()
 BARS.setupActions()
 BARS.setupToolbars()
 BARS.setupVue()
@@ -64,10 +66,10 @@ initReferenceImages()
 animate()
 
 console.log(`Three.js r${THREE.REVISION}`)
-console.log('%cBlockbench ' + Blockbench.version + (isApp
+console.log('%cWorkbench ' + Blockbench.version + (isApp
 	? (' Desktop (' + Blockbench.operating_system + ', ' + SystemInfo.arch +')')
 	: (' Web ('+capitalizeFirstLetter(Blockbench.browser) + (Blockbench.isPWA ? ', PWA)' : ')'))),
-	'border: 2px solid #3e90ff; padding: 4px 8px; font-size: 1.2em;'
+	'border: 2px solid #BEF264; padding: 4px 8px; font-size: 1.2em; color: #BEF264;'
 )
 Blockbench.startup_count = parseInt(localStorage.getItem('startups')||0) + 1;
 localStorage.setItem('startups', Blockbench.startup_count);

@@ -196,14 +196,14 @@ export const Canvas = {
 		return line;
 	})(),
 	hover_helper_vertex: (function() {
-		let material = new THREE.PointsMaterial({size: 4, sizeAttenuation: false, color: 0x3e90ff})
+		let material = new THREE.PointsMaterial({size: 4, sizeAttenuation: false, color: 0xBEF264})
 		let geometry = new THREE.BufferGeometry();
 		geometry.setAttribute('position', new THREE.Float32BufferAttribute( [0, 0, 0], 3 ));
 		return new THREE.Points(geometry, material);
 	})(),
 
 	onionSkinEarlierMaterial: new THREE.LineBasicMaterial({color: 0xa3363d}),
-	onionSkinLaterMaterial: new THREE.LineBasicMaterial({color: 0x3995bf}),
+	onionSkinLaterMaterial: new THREE.LineBasicMaterial({color: 0xBEF264}),
 	gridMaterial: new THREE.LineBasicMaterial({color: gizmo_colors.grid}),
 	buildGrid() {
 		three_grid.children.empty();

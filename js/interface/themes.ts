@@ -1,6 +1,4 @@
 import DarkTheme from '../../themes/dark.bbtheme'
-import LightTheme from '../../themes/light.bbtheme'
-import ContrastTheme from '../../themes/contrast.bbtheme'
 import { patchedAtob, text_measure_ctx } from '../util/util'
 import { Dialog } from './dialog'
 import { settings, Settings } from './settings'
@@ -38,24 +36,24 @@ type ThemeData = {
 }
 
 const DEFAULT_COLORS = {
-	ui: '#1e2127',
-	back: '#181b1f',
-	dark: '#101316',
-	border: '#101316',
-	selected: '#3b3e49',
-	elevated: '#272a31',
-	button: '#33383f',
-	bright_ui: '#f4f3ff',
-	accent: '#3e90ff',
-	frame: '#0f1012',
-	text: '#cacad4',
-	light: '#f4f3ff',
-	accent_text: '#000006',
-	bright_ui_text: '#000006',
-	subtle_text: '#848891',
-	grid: '#30333d',
-	wireframe: '#576f82',
-	checkerboard: '#14171b',
+	ui: '#091205',
+	back: '#000000',
+	dark: '#000000',
+	border: '#243d12',
+	selected: '#2d4f16',
+	elevated: '#0f1c08',
+	button: '#162a0a',
+	bright_ui: '#BEF264',
+	accent: '#BEF264',
+	frame: '#000000',
+	text: '#ffffff',
+	light: '#ffffff',
+	accent_text: '#000000',
+	bright_ui_text: '#000000',
+	subtle_text: '#a3cc72',
+	grid: '#24380c',
+	wireframe: '#BEF264',
+	checkerboard: '#040702',
 }
 
 export class CustomTheme {
@@ -161,8 +159,6 @@ export class CustomTheme {
 	static backup_data: string | null = null
 	static themes: CustomTheme[] = [
 		DarkTheme,
-		LightTheme,
-		ContrastTheme
 	].map(theme_data => {
 		let theme = new CustomTheme().parseBBTheme(theme_data, true);
 		theme.source = 'built_in';
@@ -850,7 +846,7 @@ if (isApp && localStorage.getItem('themes_sideloaded')) {
 }
 
 export function loadThemes() {
-	let dark = CustomTheme.themes.find(t => t.id == 'dark') || new CustomTheme().parseBBTheme(DarkTheme, true);
+	let dark = new CustomTheme().parseBBTheme(DarkTheme, true);
 	dark.load();
 }
 
